@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+
 
 namespace day1._2
 {
@@ -10,11 +12,24 @@ namespace day1._2
             string[] lines = File.ReadAllLines("input.txt");
 
             int total = 0;
-            foreach (string line in lines)
+            bool done = false;
+            Dictionary<int,bool> results = new Dictionary<int, bool>();
+
+            while(!done)
             {
-                int value = Int32.Parse(line);
-                total += value;
-                Console.WriteLine("Adding {0} to get the total {1}.", value, total);
+                foreach (string line in lines)
+                {
+                    int value = Int32.Parse(line);
+                    total += value;
+                    Console.WriteLine("Adding {0} to get the total {1}.", value, total);
+                    if (results.ContainsKey(total))
+                    {
+                        Console.WriteLine("Found repeated frequency {0}", total);
+                        done = true;
+                        break;
+                    }
+                    results.Add(total,true);
+                }
             }
         }
     }
